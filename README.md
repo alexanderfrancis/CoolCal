@@ -1,2 +1,0 @@
-# CoolCal
-JavaFX Calendar
