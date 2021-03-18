@@ -4,13 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -33,11 +30,9 @@ public class Login extends Application {
                 new Label("Your Password"),
                 new PasswordField(),
                 new Button("Login"),
-                new Label("Username"),
-                new TextField(),
-                new Label("Your Password"),
-                new PasswordField(),
-                new Button("Login"));
+
+                new Label("Don't have an account? Register!"),
+                new Button("Register"));
         root.getChildren().addAll(vBoxLogin);
 
         button.setOnAction(actionEvent-> {
