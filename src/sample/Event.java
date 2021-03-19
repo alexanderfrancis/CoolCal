@@ -55,6 +55,7 @@ public class Event {
 
     public static void main(String[] args) {
         Event e = new Event("Boba", "March 16, 2021", true, "purple");
+
         e.printEvent();
     }
 }

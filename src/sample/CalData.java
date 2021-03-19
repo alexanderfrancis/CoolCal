@@ -1,7 +1,10 @@
 package sample;
 
 import java.sql.*;
+import java.util.ArrayList; // import the ArrayList class
 public class CalData{
+    public static ArrayList<Event> events = new ArrayList<Event>(); // Create an ArrayList object
+
 
     public static void insertUser(String userName,String Pass,String firstName,String lastName,String email){
 
@@ -29,7 +32,48 @@ public class CalData{
 
     }
 
-    public static void deleteEvent(Integer eventId){
+    public static void getEvents(Integer userId){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
+
+            String query="SELECT * FROM events WHERE userId=? ";
+
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            preparedStmt.setInt(1, userId);
+
+
+            ResultSet rs=preparedStmt.executeQuery();
+
+            if (!rs.next()){
+                System.out.println("No events");
+            }
+            else{
+                while(rs.next()!=false){
+
+                    String date=rs.getString("scheduledAt");
+                    int gr=rs.getInt("type");
+
+                    String title=rs.getString("title");
+
+                    Event e = new Event(title, date, true, "purple");
+
+                    events.add(e);
+                    System.out.println("done events");
+                }
+
+
+            }
+            con.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+
+    }
+
+
+        public static void deleteEvent(Integer eventId){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
@@ -169,6 +213,14 @@ public class CalData{
         insertUser("Jeff_1234","mydog123","Jeff","larry","jeff@hotmail.com");
         openConnectionTest();
         userLoginAuthentication("jeff_1234","mydog123");
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+//        insertEvent("dentist appointment","tommorow 2:30",date,"dsfdsfds","dsdsds",1,1,3,4);
+        getEvents(4);
+
+        System.out.println("For Loop");
+        for (int counter = 0; counter < events.size(); counter++) {
+            System.out.println(events.get(counter).name);
+        }
 
 
 
