@@ -2,6 +2,8 @@ package sample;
 
 import java.sql.*;
 import java.util.ArrayList; // import the ArrayList class
+import java.util.Calendar;
+
 public class CalData{
     public static ArrayList<Event> events = new ArrayList<Event>(); // Create an ArrayList object
 
@@ -145,24 +147,22 @@ public class CalData{
         }
     }
 
-    public static void insertEvent(String title, String description, Timestamp ScheduledAt, String content, String url, Integer type, Integer reminderCount, Integer reminderInterval, Integer userId){
+    public static void insertEvent(String title, String description, Timestamp ScheduledAt, Timestamp triggeredAt, String url, Integer type, Integer userId){
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
 
-            String query=" insert into events (userId,title,description, ScheduledAt, content, url, type, reminderCount, reminderInterval)"
-                    + " values (?,?,?,?,?,?,?,?,?)";
+            String query=" insert into events (userId,title,description, ScheduledAt, triggeredAt, url, type)"
+                    + " values (?,?,?,?,?,?,?)";
             PreparedStatement preparedStmt = con.prepareStatement(query);
             preparedStmt.setInt (1, userId);
             preparedStmt.setString (2, title);
             preparedStmt.setString (3, description);
             preparedStmt.setTimestamp (4, ScheduledAt);
-            preparedStmt.setString (5, content);
+            preparedStmt.setTimestamp (5, triggeredAt);
             preparedStmt.setString (6, url);
             preparedStmt.setInt (7, type);
-            preparedStmt.setInt (8, reminderCount);
-            preparedStmt.setInt (9, reminderInterval);
 
             preparedStmt.execute();
 
@@ -188,6 +188,7 @@ public class CalData{
 //        }
 //    }
 
+
     public static void openConnectionTest(){
 
         try {
@@ -203,6 +204,39 @@ public class CalData{
             System.out.println(e);
         }
 
+    }
+    public static Timestamp setEtime(int year, int month, int day, int hour, int minute, int second){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, second);
+        Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
+
+        return timestamp;
+    }
+
+    public static Timestamp setTrigger(int year, int month, int day, int hour, int minute, int second){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, second);
+
+        int min = 0;
+        if (minute < 5){
+            min = 60 - 5 + minute;
+            calendar.set(Calendar.MINUTE, min);
+        }else{
+            calendar.set(Calendar.MINUTE, minute-5);
+        }
+        Timestamp trigger = new Timestamp(calendar.getTimeInMillis());
+
+        return trigger;
     }
 
 
@@ -223,7 +257,16 @@ public class CalData{
         }
 
 
+        int year = 2021;
+        int month = 0;
+        int day = 8;
+        int hour = 19;
+        int minute = 50;
+        int second = 0;
+        Timestamp timestamp = setEtime(year,month,day,hour,minute,second);
+        Timestamp trigger = setTrigger(year,month,day,hour,minute,second);
 
+        insertEvent("test4", "test3", timestamp, trigger, "url", 1, 1);
 
     }
 
