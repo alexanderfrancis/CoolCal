@@ -19,7 +19,7 @@ public class Login extends Application {
 
     @Override
     public void init() {
-        Button button = new Button("OPEN");
+        Button buttonLogin = new Button("OPEN");
         VBox vBoxLogin = new VBox();
 
         vBoxLogin.setSpacing(12);
@@ -35,7 +35,7 @@ public class Login extends Application {
                 new Button("Register"));
         root.getChildren().addAll(vBoxLogin);
 
-        button.setOnAction(actionEvent-> {
+        buttonLogin.setOnAction(actionEvent-> {
             if(stage!=null){
                 stage.requestFocus();
 
