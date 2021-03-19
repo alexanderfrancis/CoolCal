@@ -94,31 +94,31 @@ public class CalData{
                 System.out.println("Your user ID is " +user_id);
                 System.out.println("Welcome back "+data_name+"!");
 
-
             }
-
             con.close();
         }catch (Exception e){
             System.out.println(e);
         }
-
-
-
     }
 
-    public static void insertEvent(String title,String description,Integer type,Integer userID){
+    public static void insertEvent(String title, String description, Timestamp ScheduledAt, String content, String url, Integer type, Integer reminderCount, Integer reminderInterval, Integer userId){
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
 
-            String query=" insert into events (userId,title,description,type)"
-                    + " values (?,?,?,?)";
+            String query=" insert into events (userId,title,description, ScheduledAt, content, url, type, reminderCount, reminderInterval)"
+                    + " values (?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStmt = con.prepareStatement(query);
-            preparedStmt.setInt (1, userID);
+            preparedStmt.setInt (1, userId);
             preparedStmt.setString (2, title);
             preparedStmt.setString (3, description);
-            preparedStmt.setInt (4, type);
+            preparedStmt.setTimestamp (4, ScheduledAt);
+            preparedStmt.setString (5, content);
+            preparedStmt.setString (6, url);
+            preparedStmt.setInt (7, type);
+            preparedStmt.setInt (8, reminderCount);
+            preparedStmt.setInt (9, reminderInterval);
 
             preparedStmt.execute();
 
@@ -127,6 +127,22 @@ public class CalData{
             System.out.println(e);
         }
     }
+
+//    public static void updateEvent(String title, Integer Id){
+//        try {
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
+//
+//            String query = "UPDATE events SET title = ? WHERE Id = " + Id;
+//            PreparedStatement preparedStmt = con.prepareStatement(query);
+//            preparedStmt.setString (1, title);
+//
+//            preparedStmt.executeUpdate(query);
+//            con.close();
+//        }catch (Exception e){
+//            System.out.println(e);
+//        }
+//    }
 
     public static void openConnectionTest(){
 
