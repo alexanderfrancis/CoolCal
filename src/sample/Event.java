@@ -66,16 +66,12 @@ public class Event {
 
     public void setUserId(Integer userId) { this.userID=userId; }
 
-
     public void printEvent(){
         System.out.println("Event Title        :    " + this.getTitle());
         System.out.println("Date              :    " + this.getDate());
         System.out.println("Recurring type        :    " + this.getRecurring());
         System.out.println("Triggered At      :    " + this.getTriggeredAt());
         System.out.println("Description      :    " + this.getDescription());
-
-
-
 
     }
 
