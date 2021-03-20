@@ -16,31 +16,63 @@ import java.awt.datatransfer.FlavorEvent;
 public class Login extends Application {
     private StackPane root = new StackPane();
     private Stage stage;
+    Button buttonLogin = new Button("Login");
+    TextField username=new TextField();
+    PasswordField password=new PasswordField();
 
-    @Override
+    Button Register=new Button("Register");
+
+
+
+
     public void init() {
-        Button buttonLogin = new Button("OPEN");
+
         VBox vBoxLogin = new VBox();
+
+
 
         vBoxLogin.setSpacing(12);
         vBoxLogin.setPadding(new Insets(15,10,10,15));
         vBoxLogin.getChildren().addAll(
                 new Label("Username"),
-                new TextField(),
+                username,
                 new Label("Your Password"),
-                new PasswordField(),
-                new Button("Login"),
+                password,
+                buttonLogin,
 
                 new Label("Don't have an account? Register!"),
-                new Button("Register"));
+                Register);
         root.getChildren().addAll(vBoxLogin);
 
-        buttonLogin.setOnAction(actionEvent-> {
+
+
+//        buttonLogin.setOnAction(actionEvent->stage.setScene(new Scene(root,800,600))
+//        {
+//
+//            CalData.userLoginAuthentication(username.getText(),password.getText());
+//            if(stage!=null){
+//                stage.requestFocus();
+//
+//                return;
+//            }
+//
+//            stage = new Stage();
+//            StackPane stackPane = new StackPane();
+//            stage.setScene(new Scene(stackPane, 200,200));
+//            stage.show();
+//        }
+//        );
+
+
+        Register.setOnAction(actionEvent-> {
+
+//            CalData.insertUser();
             if(stage!=null){
                 stage.requestFocus();
 
                 return;
             }
+
             stage = new Stage();
             StackPane stackPane = new StackPane();
             stage.setScene(new Scene(stackPane, 200,200));
@@ -49,11 +81,32 @@ public class Login extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Scene scene = new Scene(root,400,600);
+        Parent root_1 = FXMLLoader.load(getClass().getResource("Calendar_Main.fxml"));
+
+        Scene scene = new Scene(root,800,600);
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setTitle("CoolCal Login");
         primaryStage.setAlwaysOnTop(true);
+
+
+
+        buttonLogin.setOnAction(actionEvent->{
+            boolean accept=CalData.userLoginAuthentication(username.getText(),password.getText());
+
+            if (accept){
+
+
+                primaryStage.setScene(new Scene(root_1,800,600));
+
+            }
+
+        });
+
+
+
+
+
     }
 
 

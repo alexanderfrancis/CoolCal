@@ -77,8 +77,8 @@ public class CalData{
 
     }
 
-    public static void userLoginAuthentication(String userName,String Pass){
-
+    public static boolean userLoginAuthentication(String userName,String Pass){
+        boolean accepted=false;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
@@ -97,6 +97,7 @@ public class CalData{
             }
             else{
                 String data_name=rs.getString("firstName");
+                accepted=true;
 
                 String user_id=rs.getString("Id");
                 System.out.println("Your user ID is " +user_id);
@@ -107,6 +108,8 @@ public class CalData{
         }catch (Exception e){
             System.out.println(e);
         }
+
+        return accepted;
     }
 
     public static void insertEvent(String title, String description, Timestamp ScheduledAt, Timestamp triggeredAt, String url, Integer type, Integer userId){
@@ -259,7 +262,7 @@ public class CalData{
 
         insertUser("Jeff_1234","mydog123","Jeff","larry","jeff@hotmail.com");
         openConnectionTest();
-        userLoginAuthentication("jeff_1234","mydog123");
+        System.out.println(userLoginAuthentication("jeff_1234","mydog123"));
         Timestamp date = new Timestamp(System.currentTimeMillis());
 //        insertEvent("dentist appointment","tommorow 2:30",date,"dsfdsfds","dsdsds",1,1,3,4);
         ArrayList<Event> events=getEvents(4);
