@@ -64,24 +64,12 @@ public class Login extends Application {
 //        );
 
 
-        Register.setOnAction(actionEvent-> {
 
-//            CalData.insertUser();
-            if(stage!=null){
-                stage.requestFocus();
-
-                return;
-            }
-
-            stage = new Stage();
-            StackPane stackPane = new StackPane();
-            stage.setScene(new Scene(stackPane, 200,200));
-            stage.show();
-        });
     }
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root_1 = FXMLLoader.load(getClass().getResource("Calendar_Main.fxml"));
+        Parent root_2 = FXMLLoader.load(getClass().getResource("Register.fxml"));
 
         Scene scene = new Scene(root,800,600);
         primaryStage.setScene(scene);
@@ -101,6 +89,13 @@ public class Login extends Application {
 
             }
 
+        });
+        Register.setOnAction(actionEvent-> {
+            stage = new Stage();
+            StackPane stackPane = new StackPane();
+            stage.setScene(new Scene(root_2, 245,600));
+            stage.setAlwaysOnTop(true);
+            stage.show();
         });
 
 
