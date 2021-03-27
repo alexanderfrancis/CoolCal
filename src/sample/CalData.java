@@ -8,7 +8,7 @@ public class CalData{
 //    public static ArrayList<Event> events = new ArrayList<Event>(); // Create an ArrayList object
 
 
-    public static void insertUser(String firstName,String lastName,String email,String userName,String password){
+    public static boolean insertUser(String firstName,String lastName,String email,String userName,String password){
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -27,10 +27,11 @@ public class CalData{
             System.out.println("SUCCESS");
 
             con.close();
+            return true;
         }catch (Exception e){
             System.out.println(e);
         }
-
+        return false;
 
     }
 
@@ -260,7 +261,7 @@ public class CalData{
 
     public static void main(String[] args) {
 
-        insertUser("Jeff_1234","mydog123","Jeff","larry","jeff@hotmail.com");
+        insertUser("John","Doe","doe.john@example.com","jdoe","1234");
         openConnectionTest();
         System.out.println(userLoginAuthentication("jeff_1234","mydog123"));
         Timestamp date = new Timestamp(System.currentTimeMillis());

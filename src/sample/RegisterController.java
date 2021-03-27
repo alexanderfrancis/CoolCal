@@ -29,10 +29,12 @@ public class RegisterController {
     public void userRegister() throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Calendar_Main.fxml"));
         System.out.println("this is register button");
-        CalData.insertUser(userFirstNameInput.getText(), userLastNameInput.getText(), userEmailInput.getText(), userNameInput.getText(), userPasswordInput.getText());
 
+        boolean n = CalData.insertUser(userFirstNameInput.getText(), userLastNameInput.getText(), userEmailInput.getText(), userNameInput.getText(), userPasswordInput.getText());
 
-        Stage window = (Stage) buttonRegister.getScene().getWindow();
-        window.setScene(new Scene(root, 750, 800));
+        if (n==true) {
+            Stage window = (Stage) buttonRegister.getScene().getWindow();
+            window.setScene(new Scene(root, 750, 800));
+        }
     }
 }
