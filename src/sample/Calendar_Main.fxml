@@ -51,7 +51,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CalendarMainController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
@@ -111,10 +111,10 @@
                                         <Font name="System Bold" size="37.0" />
                                     </font>
                                 </Label>
-                                <Button layoutX="56.0" layoutY="98.0" mnemonicParsing="false" text="Create New Event" />
+                                <Button layoutX="56.0" layoutY="98.0" mnemonicParsing="false" text="Create New Event" fx:id="buttonNewEvent"/>
                             </children>
                         </Pane>
-                        <Button layoutX="84.0" layoutY="506.0" mnemonicParsing="false" text="Logout" />
+                        <Button layoutX="84.0" layoutY="506.0" mnemonicParsing="false" text="Logout" fx:id="buttonLogout"/>
                     </children>
                 </AnchorPane>
                 <ScrollPane prefHeight="-1.0" prefWidth="-1.0">

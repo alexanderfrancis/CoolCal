@@ -19,11 +19,11 @@ public class RegisterController {
     public TextField userPasswordInput;
 
 
-    public void start(Stage primaryStage) throws Exception {
-
-
-
-    }
+//    public void start(Stage primaryStage) throws Exception {
+//
+//
+//
+//    }
 
 
     public void userRegister() throws Exception{
