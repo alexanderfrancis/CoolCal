@@ -42,7 +42,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="612.0" prefWidth="243.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="612.0" prefWidth="243.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RegisterController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -85,16 +85,16 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="587.0" prefWidth="249.0" VBox.vgrow="ALWAYS">
       <children>
-            <Button layoutX="99.0" layoutY="514.0" mnemonicParsing="false" text="Register" />
-            <TextField layoutX="41.0" layoutY="93.0" />
+            <Button layoutX="99.0" layoutY="514.0" mnemonicParsing="false" text="Register" fx:id="buttonRegister" onAction="#userRegister"/>
+            <TextField layoutX="41.0" layoutY="93.0" fx:id="userFirstNameInput"/>
             <Label layoutX="43.0" layoutY="64.0" text="First Name" />
-            <TextField layoutX="41.0" layoutY="165.0" />
+            <TextField layoutX="41.0" layoutY="165.0" fx:id="userLastNameInput"/>
             <Label layoutX="41.0" layoutY="138.0" text="Last Name" />
-            <TextField layoutX="41.0" layoutY="244.0" />
+            <TextField layoutX="41.0" layoutY="244.0" fx:id="userEmailInput"/>
             <Label layoutX="41.0" layoutY="218.0" text="email" />
-            <TextField layoutX="41.0" layoutY="325.0" />
+            <TextField layoutX="41.0" layoutY="325.0" fx:id="userNameInput"/>
             <Label layoutX="41.0" layoutY="294.0" text="username" />
-            <TextField layoutX="41.0" layoutY="405.0" />
+            <TextField layoutX="41.0" layoutY="405.0" fx:id="userPasswordInput"/>
             <Label layoutX="42.0" layoutY="372.0" text="password" />
       </children>
     </AnchorPane>

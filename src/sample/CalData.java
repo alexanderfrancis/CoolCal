@@ -8,7 +8,7 @@ public class CalData{
 //    public static ArrayList<Event> events = new ArrayList<Event>(); // Create an ArrayList object
 
 
-    public static void insertUser(String userName,String Pass,String firstName,String lastName,String email){
+    public static void insertUser(String firstName,String lastName,String email,String userName,String password){
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -21,7 +21,7 @@ public class CalData{
             preparedStmt.setString (2, lastName);
             preparedStmt.setString (3, userName);
             preparedStmt.setString (4, email);
-            preparedStmt.setString (5, Pass);
+            preparedStmt.setString (5, password);
 
             preparedStmt.execute();
             System.out.println("SUCCESS");
