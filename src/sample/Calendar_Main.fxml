@@ -111,10 +111,10 @@
                                         <Font name="System Bold" size="37.0" />
                                     </font>
                                 </Label>
-                                <Button layoutX="56.0" layoutY="98.0" mnemonicParsing="false" text="Create New Event" fx:id="buttonNewEvent"/>
+                                <Button layoutX="56.0" layoutY="98.0" mnemonicParsing="false" text="Create New Event" fx:id="buttonNewEvent" onAction= "#AddEvent"/>
                             </children>
                         </Pane>
-                        <Button layoutX="84.0" layoutY="506.0" mnemonicParsing="false" text="Logout" fx:id="buttonLogout"/>
+                        <Button layoutX="84.0" layoutY="506.0" mnemonicParsing="false" text="Logout" fx:id="buttonLogout" onAction="#userLogout"/>
                     </children>
                 </AnchorPane>
                 <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
@@ -125,14 +125,14 @@
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font></Label>
-                                <DatePicker layoutX="148.0" layoutY="15.0" />
-                                <TableView layoutX="14.0" layoutY="97.0" prefHeight="428.0" prefWidth="633.0">
+                                <DatePicker layoutX="148.0" layoutY="15.0" onAction="#eventShow"/>
+                                <TableView layoutX="14.0" layoutY="97.0" prefHeight="428.0" prefWidth="633.0" fx:id="TableView">
                                     <columns>
-                                        <TableColumn prefWidth="170.0" text="Event Name" />
-                                        <TableColumn minWidth="0.0" prefWidth="61.0" text="Date" />
-                                        <TableColumn minWidth="0.0" prefWidth="65.0" text="Time" />
-                                        <TableColumn prefWidth="266.0" text="Descritption" />
-                                        <TableColumn minWidth="0.0" prefWidth="70.0" text="Reminder" />
+                                        <TableColumn prefWidth="170.0" text="Event Name" fx:id="EventName"/>
+                                        <TableColumn minWidth="0.0" prefWidth="61.0" text="Date" fx:id="DateName"/>
+                                        <TableColumn minWidth="0.0" prefWidth="65.0" text="Time" fx:id="TimeName"/>
+                                        <TableColumn prefWidth="266.0" text="Description" fx:id="DesName"/>
+                                        <TableColumn minWidth="0.0" prefWidth="70.0" text="Reminder" fx:id="RemName"/>
                                     </columns>
                                 </TableView>
                             </children>

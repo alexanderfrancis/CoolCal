@@ -1,11 +1,13 @@
 package sample;
 
+
 import java.sql.*;
 import java.util.ArrayList; // import the ArrayList class
 import java.util.Calendar;
 
 public class CalData{
-//    public static ArrayList<Event> events = new ArrayList<Event>(); // Create an ArrayList object
+    public static User current;
+    //    public static ArrayList<Event> events = new ArrayList<Event>(); // Create an ArrayList object
 
 
     public static boolean insertUser(String firstName,String lastName,String email,String userName,String password){
@@ -25,6 +27,10 @@ public class CalData{
 
             preparedStmt.execute();
             System.out.println("SUCCESS");
+
+//            current=new User(-1, firstName, lastName, userName,
+//                    email, password,
+//                    null, null);
 
             con.close();
             return true;
@@ -98,13 +104,22 @@ public class CalData{
             }
             else{
                 String data_name=rs.getString("firstName");
+                String data_last=rs.getString("lastName");
                 accepted=true;
 
-                String user_id=rs.getString("Id");
+                Integer user_id=rs.getInt("Id");
                 System.out.println("Your user ID is " +user_id);
                 System.out.println("Welcome back "+data_name+"!");
+                String email=rs.getString("email");
+
+                current=new User(user_id, data_name, data_last, userName,
+                        email, Pass,
+                        null, null);
+
+
 
             }
+
             con.close();
         }catch (Exception e){
             System.out.println(e);
@@ -131,6 +146,8 @@ public class CalData{
             preparedStmt.setInt (7, type);
 
             preparedStmt.execute();
+
+
 
             con.close();
         }catch (Exception e){
@@ -261,8 +278,10 @@ public class CalData{
 
     public static void main(String[] args) {
 
-        insertUser("John","Doe","doe.john@example.com","jdoe","1234");
+//        insertUser("John","Doe","doe.john@example.com","jdoe","1234");
         openConnectionTest();
+
+
         System.out.println(userLoginAuthentication("jeff_1234","mydog123"));
         Timestamp date = new Timestamp(System.currentTimeMillis());
 //        insertEvent("dentist appointment","tommorow 2:30",date,"dsfdsfds","dsdsds",1,1,3,4);
@@ -282,8 +301,9 @@ public class CalData{
         int second = 0;
         Timestamp timestamp = setEtime(year,month,day,hour,minute,second);
         Timestamp trigger = setTrigger(year,month,day,hour,minute,second);
-
-        insertEvent("test4", "test3", timestamp, trigger, "url", 1, 4);
+        System.out.print(trigger);
+//        insertEvent("fdsfds","dmkmdksa",timestamp,trigger,"www.google.com",1,4);
+//        insertEvent("test4", "test3", timestamp, trigger, "url", 1, 4);
 
     }
 
