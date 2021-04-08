@@ -43,7 +43,6 @@ public class CalData{
     public static void updateUserID() {
         current_user_id=-1;
 
-
     }
 
 
@@ -51,7 +50,7 @@ public class CalData{
 
 
 
-        public static void deleteEvent(Integer eventId){
+        public static boolean deleteEvent(Integer eventId){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
@@ -65,13 +64,15 @@ public class CalData{
             System.out.println("SUCCESS");
 
             con.close();
+            return true;
         }catch (Exception e){
             System.out.println(e);
+            return false;
         }
 
     }
 
-    public static void deleteUser(Integer userId){
+    public static boolean deleteUser(Integer userId){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
@@ -85,10 +86,11 @@ public class CalData{
             System.out.println("SUCCESSFUL USER DELETION");
 
             con.close();
+            return true;
         }catch (Exception e){
             System.out.println(e);
+            return false;
         }
-
     }
 
     public static boolean userLoginAuthentication(String userName,String Pass){
@@ -119,12 +121,7 @@ public class CalData{
                 System.out.println("Welcome back "+data_name+"!");
                 String email=rs.getString("email");
 
-//                current=new User(user_id, data_name, data_last, userName,
-//                        email, Pass,
-//                        null, null);
                 current_user_id=user_id;
-
-
 
             }
 
@@ -136,7 +133,7 @@ public class CalData{
         return accepted;
     }
 
-    public static void insertEvent(String title, String description, Timestamp ScheduledAt, Timestamp triggeredAt, String url, Integer type, Integer userId){
+    public static boolean insertEvent(String title, String description, Timestamp ScheduledAt, Timestamp triggeredAt, String url, Integer type, Integer userId){
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -158,10 +155,13 @@ public class CalData{
 
 
             con.close();
+            return true;
         }catch (Exception e){
             System.out.println(e);
+            return false;
         }
     }
+
     public static ArrayList<Event> getEvents(Integer userId){
         ArrayList<Event> events = new ArrayList<Event>(); // Create an ArrayList object
 
@@ -178,11 +178,6 @@ public class CalData{
 
             ResultSet rs=preparedStmt.executeQuery();
 
-//            if (!rs.next()){
-//                System.out.println("No events");
-//            }
-//            else{
-//
             while(rs.next()!=false){
 
                 Timestamp date=rs.getTimestamp("scheduledAt");
@@ -202,51 +197,82 @@ public class CalData{
                 System.out.println("done events");
             }
 
-
-//            }
             con.close();
         }catch (Exception e){
             System.out.println(e);
+
         }
         return events;
-
-
     }
 
 
-//    public static void updateEvent(String title, Integer Id){
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
-//
-//            String query = "UPDATE events SET title = ? WHERE Id = " + Id;
-//            PreparedStatement preparedStmt = con.prepareStatement(query);
-//            preparedStmt.setString (1, title);
-//
-//            preparedStmt.executeUpdate(query);
-//            con.close();
-//        }catch (Exception e){
-//            System.out.println(e);
-//        }
-//    }
+    public static boolean updateEvent(String title, String description, Timestamp ScheduledAt, Timestamp triggeredAt, String url, Integer type, Integer Id){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
+
+            PreparedStatement pstmt = null;
+            if (title != null){
+                pstmt = con.prepareStatement("update events set title=? where Id=?");
+                pstmt.setString(1,title);
+                pstmt.setInt(2,Id);
+
+            }else if (description != null) {
+                pstmt = con.prepareStatement("update events set description=? where Id=?");
+                pstmt.setString(1, description);
+                pstmt.setInt(2, Id);
+
+            }else if (ScheduledAt != null){
+                pstmt = con.prepareStatement("update events set ScheduledAt=? where Id=?");
+                pstmt.setTimestamp(1, ScheduledAt);
+                pstmt.setInt(2, Id);
+
+            }else if (triggeredAt != null){
+                pstmt = con.prepareStatement("update events set triggeredAt=? where Id=?");
+                pstmt.setTimestamp(1, triggeredAt);
+                pstmt.setInt(2, Id);
+
+            }else if (url != null){
+                pstmt = con.prepareStatement("update events set url=? where Id=?");
+                pstmt.setString(1, url);
+                pstmt.setInt(2, Id);
+
+            }else if (type != null){
+                pstmt = con.prepareStatement("update events set type=? where Id=?");
+                pstmt.setInt(1, type);
+                pstmt.setInt(2, Id);
+
+            }
+            pstmt.executeUpdate();
+
+            con.close();
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
 
 
-    public static void openConnectionTest(){
+    public static boolean openConnectionTest(){
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/test_schema","root","");
+            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
             Statement stat=con.createStatement();
             ResultSet rs=stat.executeQuery("select * from users");
             while (rs.next()){
                 System.out.println(rs.getInt(1)+" "+ rs.getString(2));
             }
             con.close();
+            return true;
         }catch (Exception e){
             System.out.println(e);
+            return false;
         }
 
     }
+
     public static Timestamp setEtime(int year, int month, int day, int hour, int minute, int second){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
@@ -285,20 +311,18 @@ public class CalData{
 
 
     public static void main(String[] args) {
-
 //        insertUser("John","Doe","doe.john@example.com","jdoe","1234");
         openConnectionTest();
 
-
         System.out.println(userLoginAuthentication("jeff_1234","mydog123"));
-        Timestamp date = new Timestamp(System.currentTimeMillis());
-//        insertEvent("dentist appointment","tommorow 2:30",date,"dsfdsfds","dsdsds",1,1,3,4);
-        ArrayList<Event> events=getEvents(4);
-
-        System.out.println("For Loop");
-        for (int counter = 0; counter < events.size(); counter++) {
-            System.out.println(events.get(counter).title);
-        }
+//        Timestamp date = new Timestamp(System.currentTimeMillis());
+////        insertEvent("dentist appointment","tommorow 2:30",date,"dsfdsfds","dsdsds",1,1,3,4);
+//        ArrayList<Event> events=getEvents(4);
+//
+//        System.out.println("For Loop");
+//        for (int counter = 0; counter < events.size(); counter++) {
+//            System.out.println(events.get(counter).title);
+//        }
 
 
         int year = 2021;
@@ -309,9 +333,10 @@ public class CalData{
         int second = 0;
         Timestamp timestamp = setEtime(year,month,day,hour,minute,second);
         Timestamp trigger = setTrigger(year,month,day,hour,minute,second);
-        System.out.print(trigger);
 //        insertEvent("fdsfds","dmkmdksa",timestamp,trigger,"www.google.com",1,4);
 //        insertEvent("test4", "test3", timestamp, trigger, "url", 1, 4);
+
+        updateEvent("title_update",null,null,null,null,null,21);
 
     }
 
