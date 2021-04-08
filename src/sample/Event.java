@@ -65,6 +65,9 @@ public class Event {
     public Integer getUserId() { return userID; }
 
     public void setUserId(Integer userId) { this.userID=userId; }
+    public Integer getId() { return id; }
+
+    public void setId(Integer Id) { this.id=Id; }
 
     public void printEvent(){
         System.out.println("Event Title        :    " + this.getTitle());

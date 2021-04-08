@@ -6,7 +6,7 @@ import java.util.ArrayList; // import the ArrayList class
 import java.util.Calendar;
 
 public class CalData{
-    public static User current;
+    public static Integer current_user_id=-1;
     //    public static ArrayList<Event> events = new ArrayList<Event>(); // Create an ArrayList object
 
 
@@ -40,6 +40,13 @@ public class CalData{
         return false;
 
     }
+    public static void updateUserID() {
+        current_user_id=-1;
+
+
+    }
+
+
 
 
 
@@ -112,9 +119,10 @@ public class CalData{
                 System.out.println("Welcome back "+data_name+"!");
                 String email=rs.getString("email");
 
-                current=new User(user_id, data_name, data_last, userName,
-                        email, Pass,
-                        null, null);
+//                current=new User(user_id, data_name, data_last, userName,
+//                        email, Pass,
+//                        null, null);
+                current_user_id=user_id;
 
 
 

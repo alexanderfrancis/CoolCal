@@ -46,7 +46,7 @@ public class EventController {
         System.out.println("event has been inserted");
 
 
-        Integer ID=CalData.current.getId();
+        Integer ID=CalData.current_user_id;
 
         LocalDate picked =date.getValue();
 
@@ -73,17 +73,14 @@ public class EventController {
         Integer year_T=trigger.getYear();
         Integer number_T=trigger.getDayOfMonth();
 
-        Timestamp s=CalData.setEtime(year,Month-1,number-1,hour,minute,0);
-        Timestamp t=CalData.setEtime(year_T,Month_T-1,number_T-1,hour_T,minute_T,0);
+        Timestamp s=CalData.setEtime(year,Month-1,number,hour,minute,0);
+        Timestamp t=CalData.setEtime(year_T,Month_T-1,number_T,hour_T,minute_T,0);
 
 //        Timestamp 2=CalData.setEtime(year,Month,number,hour,minute,0);
 
-
-
-
 //        System.out.println(picked + "\n" + instant + "\n" + day+ "hour:"+hour+ "\n" + Month+"\n"+ year+"\n"+number);
 
-        CalData.insertEvent(TitleInput.getText(),DescriptionInput.getText(),s,t,URLInput.getText(),Integer.parseInt(typeInput.getText()),60);
+        CalData.insertEvent(TitleInput.getText(),DescriptionInput.getText(),s,t,URLInput.getText(),Integer.parseInt(typeInput.getText()),ID);
 
         Parent root = FXMLLoader.load(getClass().getResource("Calendar_Main.fxml"));
 

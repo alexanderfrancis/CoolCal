@@ -13,17 +13,18 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.awt.datatransfer.FlavorEvent;
+import java.io.IOException;
 
 public class Login extends Application {
     private static StackPane root = new StackPane();
     private static StackPane root4 = new StackPane();
 
     private  Stage stage;
-    static Button buttonLogin = new Button("Login");
-     static TextField username=new TextField();
+     public static Button buttonLogin = new Button("Login");
+     public static TextField username=new TextField();
     static PasswordField password=new PasswordField();
 
-    static Button Register=new Button("Register");
+    public static Button Register=new Button("Register");
 
 
 
@@ -107,8 +108,6 @@ public class Login extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root_1 = FXMLLoader.load(getClass().getResource("Calendar_Main.fxml"));
-        Parent root_2 = FXMLLoader.load(getClass().getResource("Register.fxml"));
 
 
         Scene scene = new Scene(root,800,600);
@@ -120,17 +119,36 @@ public class Login extends Application {
 
 
         buttonLogin.setOnAction(actionEvent->{
+
+
             boolean accept=CalData.userLoginAuthentication(username.getText(),password.getText());
 
             if (accept){
+                try {
+                    Parent root_1 = FXMLLoader.load(getClass().getResource("Calendar_Main.fxml"));
+                    primaryStage.setScene(new Scene(root_1,800,600));
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
 
-                primaryStage.setScene(new Scene(root_1,800,600));
+
+
+
 
             }
 
         });
         Register.setOnAction(actionEvent-> {
+
+            Parent root_2 = null;
+            try {
+                root_2 = FXMLLoader.load(getClass().getResource("Register.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             stage = new Stage();
             StackPane stackPane = new StackPane();
             stage.setScene(new Scene(root_2, 245,600));
@@ -139,17 +157,7 @@ public class Login extends Application {
 
         });
     }
-    public static Stage getPrimaryStage() {
-        newroot();
-        Scene scene = new Scene(root4,800,600);
-        Stage stage = new Stage();
 
-        stage.setScene(scene);
-        stage.show();
-        stage.setTitle("CoolCal Login");
-        stage.setAlwaysOnTop(true);
-        return stage;
-    }
 
     public static void main(String[] args) {
         launch(args);

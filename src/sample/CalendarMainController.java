@@ -18,7 +18,9 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class CalendarMainController implements Initializable {
@@ -30,6 +32,9 @@ public class CalendarMainController implements Initializable {
     public TableColumn EventName;
     public TableColumn DesName;
     public TableColumn DateName;
+    public DatePicker date;
+
+
 
 //    public TextField TitleInput;
 //    public TextField DescriptionInput;
@@ -111,24 +116,33 @@ public class CalendarMainController implements Initializable {
 //        TableView.setItems(list);
 //
 //        TableView.getItems().add("New Item");
+        EventName.setCellValueFactory(new PropertyValueFactory<>("title"));
+        DesName.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        TableView.setItems(getEventListonDate());
     }
 
     @Override
     public void initialize (URL arg0, ResourceBundle arg1){
+
         EventName.setCellValueFactory(new PropertyValueFactory<>("title"));
         DesName.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         TableView.setItems(getEventList());
 
 
+
+
     }
-    ObservableList<Event> getEventList(){
+    public ObservableList<Event> getEventList(){
         ObservableList<Event> events  =FXCollections.observableArrayList();
-//        Integer ID=CalData.current.getId();
-        ArrayList<Event> eventList=CalData.getEvents(60);
+        Integer ID=CalData.current_user_id;
+        System.out.println("userid:"+ID);
+        ArrayList<Event> eventList=CalData.getEvents(ID);
 
         for(Event name : eventList)
         {
+
             events.add(name);
         }
 
@@ -141,6 +155,40 @@ public class CalendarMainController implements Initializable {
 
     }
 
+
+    ObservableList<Event> getEventListonDate(){
+        ObservableList<Event> events  =FXCollections.observableArrayList();
+        Integer ID=CalData.current_user_id;
+        System.out.println(ID);
+        ArrayList<Event> eventList=CalData.getEvents(ID);
+
+        for(Event name : eventList)
+        {
+            Calendar cal= Calendar.getInstance();
+
+            cal.setTime(name.getDate());
+            LocalDate dat=date.getValue();
+            Integer Month= dat.getMonthValue();
+            Integer day= dat.getDayOfMonth();
+            Integer year=dat.getYear();
+
+
+
+
+            if (cal.get(Calendar.MONTH)==(Month-1) && cal.get(Calendar.DAY_OF_MONTH)==(day) && cal.get(Calendar.YEAR)==(year)){
+                events.add(name);
+            }
+
+        }
+
+
+
+
+        return events;
+
+
+
+    }
 
 
     public void AddEvent() throws Exception {
