@@ -57,7 +57,7 @@ public class Scheduler {
                     if (hourCheck(time)) {
                         try {
                             mail.sendEmailTo(m.getnotified(), m.getemail(), m.getfirstName(), m.getlastName(), m.gettitle(), m.geturl(), m.getregisteredAt(), m.getId());
-                            c.updateEvent(null, null,  null,  null, null, null, 1, m.getId());
+                            c.updateEvent(null, null,  null,  null, null, 1, m.getId());
                         } catch (MessagingException e) {
                             e.printStackTrace();
                         }

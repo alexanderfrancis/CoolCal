@@ -15,7 +15,7 @@ public class Event {
     Integer notified;
     Integer id;
 
-    public Event(Integer userID,String title, Timestamp date, Integer type,String description,String URL,Timestamp triggeredAt,Integer notified,Integer id) {
+    public Event(Integer userID,String title, Timestamp date,String description,String URL,Timestamp triggeredAt,Integer notified,Integer id) {
         this.title = title;
         this.date = date;
         this.id=id;
@@ -25,7 +25,6 @@ public class Event {
         this.triggeredAt=triggeredAt;
         this.description=description;
         this.notified=notified;
-        this.recurring=type;
 
 
     }

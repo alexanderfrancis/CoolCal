@@ -79,7 +79,7 @@ public class EventController {
 
 //        System.out.println(picked + "\n" + instant + "\n" + day+ "hour:"+hour+ "\n" + Month+"\n"+ year+"\n"+number);
         Integer notified = 0;
-        CalData.insertEvent(TitleInput.getText(),DescriptionInput.getText(),s,t,URLInput.getText(),Integer.parseInt(typeInput.getText()),ID, notified);
+        CalData.insertEvent(TitleInput.getText(),DescriptionInput.getText(),s,t,URLInput.getText(),ID, notified);
 
         Parent root = FXMLLoader.load(getClass().getResource("Calendar_Main.fxml"));
 

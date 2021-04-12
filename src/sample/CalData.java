@@ -136,14 +136,14 @@ public class CalData{
         return accepted;
     }
 
-    public static boolean insertEvent(String title, String description, Timestamp ScheduledAt, Timestamp triggeredAt, String url, Integer type, Integer userId, Integer notified){
+    public static boolean insertEvent(String title, String description, Timestamp ScheduledAt, Timestamp triggeredAt, String url, Integer userId, Integer notified){
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
 
-            String query=" insert into events (userId,title,description, ScheduledAt, triggeredAt, url, type, notified)"
-                    + " values (?,?,?,?,?,?,?,?)";
+            String query=" insert into events (userId,title,description, ScheduledAt, triggeredAt, url, notified)"
+                    + " values (?,?,?,?,?,?,?)";
             PreparedStatement preparedStmt = con.prepareStatement(query);
             preparedStmt.setInt (1, userId);
             preparedStmt.setString (2, title);
@@ -151,8 +151,7 @@ public class CalData{
             preparedStmt.setTimestamp (4, ScheduledAt);
             preparedStmt.setTimestamp (5, triggeredAt);
             preparedStmt.setString (6, url);
-            preparedStmt.setInt (7, type);
-            preparedStmt.setInt (8, notified);
+            preparedStmt.setInt (7, notified);
 
             preparedStmt.execute();
 
@@ -224,12 +223,11 @@ public class CalData{
                 Integer user_ID=rs.getInt("userId");
                 String description=rs.getString("description");
                 Integer ID=rs.getInt("id");
-                Integer type=rs.getInt("type");
                 String URL=rs.getString("url");
                 Timestamp triggeredAt=rs.getTimestamp("triggeredAt");
                 Integer notified=rs.getInt("notified");
 
-                Event e = new Event(user_ID,title,date,type,description,URL,triggeredAt,notified,ID);
+                Event e = new Event(user_ID,title,date,description,URL,triggeredAt,notified,ID);
 
                 events.add(e);
                 System.out.println("done events");
@@ -264,13 +262,12 @@ public class CalData{
                 Integer user_ID=rs.getInt("userId");
                 String description=rs.getString("description");
                 Integer ID=rs.getInt("id");
-                Integer type=rs.getInt("type");
                 String URL=rs.getString("url");
                 Timestamp triggeredAt=rs.getTimestamp("triggeredAt");
                 Integer notified=rs.getInt("notified");
 
 
-                Event e = new Event(user_ID,title, date, type, description, URL, triggeredAt, notified, ID);
+                Event e = new Event(user_ID,title, date, description, URL, triggeredAt, notified, ID);
 
                 today.add(e);
             }
@@ -283,7 +280,10 @@ public class CalData{
         return today;
     }
 
-    public static boolean updateEvent(String title, String description, Timestamp ScheduledAt, Timestamp triggeredAt, String url, Integer type, Integer notified, Integer Id){
+
+
+
+    public static boolean updateEvent(String title, String description, Timestamp ScheduledAt, Timestamp triggeredAt, String url, Integer notified, Integer Id){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
@@ -314,11 +314,6 @@ public class CalData{
                 pstmt.setString(1, url);
                 pstmt.setInt(2, Id);
 
-            }else if (type != null){
-                pstmt = con.prepareStatement("update events set type=? where Id=?");
-                pstmt.setInt(1, type);
-                pstmt.setInt(2, Id);
-
             }else if (notified != null){
                 pstmt = con.prepareStatement("update events set notified=? where Id=?");
                 pstmt.setInt(1, notified);
@@ -334,7 +329,6 @@ public class CalData{
             return false;
         }
     }
-
 
     public static boolean openConnectionTest(){
 
@@ -352,7 +346,6 @@ public class CalData{
             System.out.println(e);
             return false;
         }
-
     }
 
     public static Timestamp setEtime(int year, int month, int day, int hour, int minute, int second){
@@ -363,8 +356,8 @@ public class CalData{
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, second);
-        Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
 
+        Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
         return timestamp;
     }
 
@@ -387,6 +380,49 @@ public class CalData{
 
         return trigger;
     }
+    public static boolean userExists(String username){
+        boolean result =false;
+        ArrayList<User> user = new ArrayList<User>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
+
+            String query="SELECT * FROM users WHERE userName=?";
+
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            preparedStmt.setString (1, username);
+            ResultSet rs=preparedStmt.executeQuery();
+
+            while(rs.next()!=false){
+
+                String firstName=rs.getString("firstName");
+                String lastName=rs.getString("lastName");
+                String userName=rs.getString("userName");
+                String email=rs.getString("email");
+                Integer id=rs.getInt("Id");
+                String passwordHash=rs.getString("passwordHash");
+                Timestamp registeredAt=rs.getTimestamp("registeredAt");
+                Timestamp lastLogin=rs.getTimestamp("lastLogin");
+
+                User u = new User(id, firstName, lastName, userName, email, passwordHash, registeredAt, lastLogin);
+                user.add(u);
+            }
+            if (user.size() > 0) {
+                result = true;
+            }
+            con.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return result;
+    }
+
+
+//    public static boolean join(){
+//
+//    }//join on event id
+
+
 
     public static ArrayList<MailInfo> mail(){
         ArrayList<MailInfo> mail = new ArrayList<MailInfo>();
@@ -400,7 +436,6 @@ public class CalData{
             Integer notified = today.get(counter).notified;
             Integer id = today.get(counter).id;
             Integer userId = today.get(counter).userID;
-
 
             ArrayList<User> userinfo=getUsers(userId);
             String firstName = userinfo.get(0).firstName;
@@ -428,16 +463,18 @@ public class CalData{
 //            System.out.println(events.get(counter).title);
 //        }
 
+//        int year = 2021;
+//        int month = 3; //starts at 0
+//        int day = 12;
+//        int hour = 8;
+//        int minute = 50;
+//        int second = 0;
+//        Timestamp timestamp = setEtime(year,month,day,hour,minute,second);
+//        Timestamp trigger = setTrigger(year,month,day,hour,minute,second);
+//        insertEvent("fdsfds","dmkmdksa",timestamp,trigger,"www.google.com",7, 0);
 
-        int year = 2021;
-        int month = 4; //starts at 0
-        int day = 8;
-        int hour = 8;
-        int minute = 50;
-        int second = 0;
-        Timestamp timestamp = setEtime(year,month,day,hour,minute,second);
-        Timestamp trigger = setTrigger(year,month,day,hour,minute,second);
-        insertEvent("fdsfds","dmkmdksa",timestamp,trigger,"www.google.com",1,7, 0);
+        boolean result = userExists("nico");
+        System.out.println(result);
 
         //        insertEvent("test4", "test3", timestamp, trigger, "url", 1, 4, 0);
 
