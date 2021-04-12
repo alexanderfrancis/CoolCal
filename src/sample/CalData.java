@@ -360,7 +360,7 @@ public class CalData{
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.HOUR, hour);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, second);
         Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
@@ -373,7 +373,7 @@ public class CalData{
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.HOUR, hour);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, second);
         int min = 0;
@@ -430,15 +430,16 @@ public class CalData{
 
 
         int year = 2021;
-        int month = 4;
+        int month = 4; //starts at 0
         int day = 8;
-        int hour = 19;
+        int hour = 8;
         int minute = 50;
         int second = 0;
         Timestamp timestamp = setEtime(year,month,day,hour,minute,second);
         Timestamp trigger = setTrigger(year,month,day,hour,minute,second);
-//        insertEvent("fdsfds","dmkmdksa",timestamp,trigger,"www.google.com",1,4, 0);
-//        insertEvent("test4", "test3", timestamp, trigger, "url", 1, 4, 0);
+        insertEvent("fdsfds","dmkmdksa",timestamp,trigger,"www.google.com",1,7, 0);
+
+        //        insertEvent("test4", "test3", timestamp, trigger, "url", 1, 4, 0);
 
 //        updateEvent("title_update",null,null,null,null,null,null,null);
 
