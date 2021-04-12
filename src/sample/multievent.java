@@ -2,7 +2,7 @@ package sample;
 
 import java.sql.Timestamp;
 
-public class multievent {
+public class MultiEvent {
 
     String title;
     Integer eventID;
@@ -12,7 +12,7 @@ public class multievent {
     Timestamp scheduledAt;
     String url;
 
-    public multievent(Integer userID,String title, String username, Integer eventID, String description, Timestamp scheduledAt, String url) {
+    public MultiEvent(Integer userID,String title, String username, Integer eventID, String description, Timestamp scheduledAt, String url) {
 
 
         this.title = title;
@@ -47,13 +47,13 @@ public class multievent {
 
     public void setDescription(String getDescription) { this.description=description; }
 
-    public Timestamp getscheduledAt() { return scheduledAt; }
+    public Timestamp getScheduledAt() { return scheduledAt; }
 
-    public void setscheduledAt(Timestamp getscheduledAt) { this.scheduledAt=scheduledAt; }
+    public void setScheduledAt(Timestamp getScheduledAt) { this.scheduledAt=scheduledAt; }
 
-    public String geturls() { return url; }
+    public String getUrls() { return url; }
 
-    public void seturls(String geturls) { this.url=url; }
+    public void setUrls(String getUrls) { this.url=url; }
 
     public void printEvent(){
         System.out.println("Event Title        :    " + this.getTitle());

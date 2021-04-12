@@ -441,8 +441,8 @@ public class CalData{
     }
 
     //function that returns hosts name
-    public static ArrayList<multievent> join(Integer eventId) {
-        ArrayList<multievent> events = new ArrayList<multievent>();
+    public static ArrayList<MultiEvent> join(Integer eventId) {
+        ArrayList<MultiEvent> events = new ArrayList<MultiEvent>();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -466,7 +466,7 @@ public class CalData{
                 Timestamp scheduledAt = res.getTimestamp("scheduledAt");
                 String url = res.getString("url");
 
-                multievent u = new multievent(userID, title, username,  eventID, description, scheduledAt,  url);
+                MultiEvent u = new MultiEvent(userID, title, username,  eventID, description, scheduledAt,  url);
                 events.add(u);
             }
 
@@ -477,8 +477,8 @@ public class CalData{
         return events;
     }
 
-    public static ArrayList<multievent> userjoin(Integer userId) {
-        ArrayList<multievent> events = new ArrayList<multievent>();
+    public static ArrayList<MultiEvent> userjoin(Integer userId) {
+        ArrayList<MultiEvent> events = new ArrayList<MultiEvent>();
 
 
         try {
@@ -503,7 +503,7 @@ public class CalData{
                 Timestamp scheduledAt = res.getTimestamp("scheduledAt");
                 String url = res.getString("url");
 
-                multievent u = new multievent(userID, title, username,  eventID, description, scheduledAt,  url);
+                MultiEvent u = new MultiEvent(userID, title, username,  eventID, description, scheduledAt,  url);
                 events.add(u);
             }
 
@@ -571,7 +571,7 @@ public class CalData{
 //        insertGuest(7,40);
 //        insertGuest(1, 40);
 
-        ArrayList<multievent> events = userjoin(7);
+        ArrayList<MultiEvent> events = userjoin(7);
         for (int counter = 0; counter < events.size(); counter++) {
             System.out.println(events.get(counter).title);
             System.out.println(events.get(counter).eventID);
