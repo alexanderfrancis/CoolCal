@@ -7,17 +7,15 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-
-import javafx.scene.control.Label;
 
 import javafx.scene.layout.Border;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.ScrollPane;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -343,6 +341,17 @@ public class CalenderMonth implements Initializable {
              newCol.setCellValueFactory(new PropertyValueFactory<>("title"));
 
              tb.getColumns().add(newCol);
+
+             tb.setRowFactory( tv -> {
+                 TableRow<Event> row = new TableRow<>();
+                 row.setOnMouseClicked(event -> {
+                     if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                         Event rowData = row.getItem();
+                         System.out.println(rowData);
+                     }
+                 });
+                 return row ;
+             });
 
 
 

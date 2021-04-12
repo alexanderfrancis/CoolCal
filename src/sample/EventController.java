@@ -60,7 +60,6 @@ public class EventController {
 
 //        Instant instant= Instant.from(picked.atStartOfDay(ZoneId.systemDefault()));
 
-
 //        java.util.Date day=Date.from(instant);
 
 //        Integer Month=Integer.parseInt(String.valueOf(picked.getMonth()));
