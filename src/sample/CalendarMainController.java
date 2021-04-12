@@ -27,7 +27,7 @@ public class CalendarMainController implements Initializable {
 
     public Button buttonNewEvent;
     public Button buttonLogout;
-    public Button submitEvent;
+    public Button getMonth;
     public TableView TableView;
     public TableColumn EventName;
     public TableColumn DesName;
@@ -106,6 +106,17 @@ public class CalendarMainController implements Initializable {
         });
 
 
+
+    }
+    public void getCalMonth() throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("CalenderMonth.fxml"));
+        System.out.println("this is month button");
+
+
+
+
+        Stage window = (Stage) getMonth.getScene().getWindow();
+        window.setScene(new Scene(root, 750, 800));
 
     }
 

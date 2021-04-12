@@ -126,6 +126,7 @@
                                         <Font name="System Bold" size="18.0" />
                                     </font></Label>
                                 <DatePicker layoutX="148.0" layoutY="15.0" onAction="#eventShow" fx:id="date"/>
+                                <Button layoutX="330.0" layoutY="15.0"  text="Click for Calender view" onAction="#getCalMonth" fx:id="getMonth"/>
                                 <TableView layoutX="14.0" layoutY="97.0" prefHeight="428.0" prefWidth="633.0" fx:id="TableView">
                                     <columns>
                                         <TableColumn prefWidth="170.0" text="Event Name" fx:id="EventName"/>

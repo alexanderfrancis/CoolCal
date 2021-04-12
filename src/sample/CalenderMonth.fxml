@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="sample.CalenderMonth"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+        <content>
+        <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="600" prefWidth="1000">
+            <children>
+
+
+            <Label fx:id="DateMonth" layoutX="150" layoutY="0.0" alignment="CENTER">
+
+            </Label>
+            <Label fx:id="DateYear" layoutX="160" layoutY="0.0" alignment="CENTER">
+
+            </Label>
+            <Label fx:id="DateTime" layoutX="150" layoutY="0.0" alignment="CENTER">
+
+            </Label>
+
+            <GridPane fx:id="grid" alignment="CENTER">
+
+            </GridPane>
+            <Button layoutX="300" layoutY="0.0" mnemonicParsing="false" text="next month" fx:id="buttonNewMonth" onAction= "#nextMonth"/>
+            <Button layoutX="56" layoutY="0.0" mnemonicParsing="false" text="last month" fx:id="buttonLastMonth" onAction= "#lastMonth"/>
+            </children>
+        </AnchorPane>
+        </content>
+        </ScrollPane>
+
+    </children>
+
+
+
+
+</AnchorPane>
