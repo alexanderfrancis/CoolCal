@@ -14,6 +14,7 @@ public class multievent {
 
     public multievent(Integer userID,String title, String username, Integer eventID, String description, Timestamp scheduledAt, String url) {
 
+
         this.title = title;
         this.eventID=eventID;
         this.userID=userID;

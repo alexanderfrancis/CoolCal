@@ -480,6 +480,7 @@ public class CalData{
     public static ArrayList<multievent> userjoin(Integer userId) {
         ArrayList<multievent> events = new ArrayList<multievent>();
 
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
