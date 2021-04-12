@@ -79,8 +79,8 @@ public class EventController {
 //        Timestamp 2=CalData.setEtime(year,Month,number,hour,minute,0);
 
 //        System.out.println(picked + "\n" + instant + "\n" + day+ "hour:"+hour+ "\n" + Month+"\n"+ year+"\n"+number);
-
-        CalData.insertEvent(TitleInput.getText(),DescriptionInput.getText(),s,t,URLInput.getText(),Integer.parseInt(typeInput.getText()),ID);
+        Integer notified = 0;
+        CalData.insertEvent(TitleInput.getText(),DescriptionInput.getText(),s,t,URLInput.getText(),Integer.parseInt(typeInput.getText()),ID, notified);
 
         Parent root = FXMLLoader.load(getClass().getResource("Calendar_Main.fxml"));
 

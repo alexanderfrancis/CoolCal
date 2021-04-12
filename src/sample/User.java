@@ -1,18 +1,21 @@
 package sample;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class User {
 
-    int id;
+    Integer id;
     String firstName;
     String lastName;
     String userName;
     String email;
     String passwordHash;
-    String registeredAt;
-    String lastLogin;
+    Timestamp registeredAt;
+    Timestamp lastLogin;
 
-    public User (int id, String firstName, String lastName, String userName, String email,
-                 String passwordHash, String registeredAt, String lastLogin) {
+    public User (Integer id, String firstName, String lastName, String userName, String email,
+                 String passwordHash, Timestamp registeredAt, Timestamp lastLogin) {
 
         this.id = id;
         this.firstName = firstName;
@@ -70,19 +73,19 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public String getRegisteredAt() {
+    public Timestamp getRegisteredAt() {
         return registeredAt;
     }
 
-    public void setRegisteredAt(String registeredAt) {
+    public void setRegisteredAt(Timestamp registeredAt) {
         this.registeredAt = registeredAt;
     }
 
-    public String getLastLogin() {
+    public Timestamp getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastLogin(String lastLogin) {
+    public void setLastLogin(Timestamp lastLogin) {
         this.lastLogin = lastLogin;
     }
 
@@ -95,9 +98,12 @@ public class User {
     }
 
     public static void main(String[] args) {
+        Date date = new Date();
+        Timestamp ts=new Timestamp(date.getTime());
+
         User u = new User(1584568, "Paul", "Blart", "pblart",
-                "segwayspeeddemon@fake.io", "49d93xsddEddk4874EDkdk",
-                "March 15, 2021", "March 18, 2021");
+                "segwayspeeddemon@fake.io", "49d93xsddEddk4874EDkdk", ts
+                , ts);
         u.printUser();
     }
 }

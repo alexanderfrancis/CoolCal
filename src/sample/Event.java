@@ -12,9 +12,10 @@ public class Event {
     String description;
     String URL;
     Integer recurring;
+    Integer notified;
     Integer id;
 
-    public Event(Integer userID,String title, Timestamp date, Integer type,String description,String URL,Timestamp triggeredAt,Integer id) {
+    public Event(Integer userID,String title, Timestamp date, Integer type,String description,String URL,Timestamp triggeredAt,Integer notified,Integer id) {
         this.title = title;
         this.date = date;
         this.id=id;
@@ -23,6 +24,7 @@ public class Event {
         this.URL=URL;
         this.triggeredAt=triggeredAt;
         this.description=description;
+        this.notified=notified;
         this.recurring=type;
 
 
@@ -62,6 +64,12 @@ public class Event {
 
     public void setTriggeredAt(Timestamp triggeredAt) { this.triggeredAt=triggeredAt; }
 
+    public Integer getNotified() { return notified; }
+
+    public void setNotified(Integer notified) {
+        this.notified = notified;
+    }
+
     public Integer getUserId() { return userID; }
 
     public void setUserId(Integer userId) { this.userID=userId; }
@@ -75,6 +83,7 @@ public class Event {
         System.out.println("Recurring type        :    " + this.getRecurring());
         System.out.println("Triggered At      :    " + this.getTriggeredAt());
         System.out.println("Description      :    " + this.getDescription());
+        System.out.println("Notified      :    " + this.getNotified());
 
     }
 
