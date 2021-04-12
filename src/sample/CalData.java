@@ -380,6 +380,7 @@ public class CalData{
 
         return trigger;
     }
+
     public static boolean userExists(String username){
         boolean result =false;
         ArrayList<User> user = new ArrayList<User>();
@@ -418,9 +419,99 @@ public class CalData{
     }
 
 
-//    public static boolean join(){
-//
-//    }//join on event id
+    public static boolean insertGuest(Integer userId, Integer eventId){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
+
+            String query=" insert into guests (userID,eventID)"
+                    + " values (?,?)";
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            preparedStmt.setInt (1, userId);
+            preparedStmt.setInt (2, eventId);
+
+            preparedStmt.execute();
+
+            con.close();
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    //function that returns hosts name
+    public static ArrayList<multievent> join(Integer eventId) {
+        ArrayList<multievent> events = new ArrayList<multievent>();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
+
+            String query = "SELECT events.title, events.description, events.scheduledAt, events.url, guests.eventID, guests.userID, users.username " +
+                    "FROM events " +
+                    "INNER JOIN guests ON events.Id = ? " +
+                    "INNER JOIN users ON guests.userID = users.Id";
+
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            preparedStmt.setInt (1, eventId);
+            ResultSet res=preparedStmt.executeQuery();
+
+            while (res.next()) {
+                String title = res.getString("title");
+                Integer eventID = res.getInt("eventID");
+                Integer userID = res.getInt("userID");
+                String username = res.getString("userName");
+                String description = res.getString("description");
+                Timestamp scheduledAt = res.getTimestamp("scheduledAt");
+                String url = res.getString("url");
+
+                multievent u = new multievent(userID, title, username,  eventID, description, scheduledAt,  url);
+                events.add(u);
+            }
+
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return events;
+    }
+
+    public static ArrayList<multievent> userjoin(Integer userId) {
+        ArrayList<multievent> events = new ArrayList<multievent>();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
+
+            String query = "SELECT events.title, events.description, events.scheduledAt, events.url, guests.eventID, guests.userID, users.username " +
+                    "FROM events " +
+                    "INNER JOIN guests ON events.userId = guests.userID " +
+                    "INNER JOIN users ON users.Id = ?";
+
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            preparedStmt.setInt (1, userId);
+            ResultSet res=preparedStmt.executeQuery();
+
+            while (res.next()) {
+                String title = res.getString("title");
+                Integer eventID = res.getInt("eventID");
+                Integer userID = res.getInt("userID");
+                String username = res.getString("userName");
+                String description = res.getString("description");
+                Timestamp scheduledAt = res.getTimestamp("scheduledAt");
+                String url = res.getString("url");
+
+                multievent u = new multievent(userID, title, username,  eventID, description, scheduledAt,  url);
+                events.add(u);
+            }
+
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return events;
+    }
 
 
 
@@ -473,8 +564,20 @@ public class CalData{
 //        Timestamp trigger = setTrigger(year,month,day,hour,minute,second);
 //        insertEvent("fdsfds","dmkmdksa",timestamp,trigger,"www.google.com",7, 0);
 
-        boolean result = userExists("nico");
-        System.out.println(result);
+//        boolean result = userExists("nico");
+//        System.out.println(result);
+//
+//        insertGuest(7,40);
+//        insertGuest(1, 40);
+
+        ArrayList<multievent> events = userjoin(7);
+        for (int counter = 0; counter < events.size(); counter++) {
+            System.out.println(events.get(counter).title);
+            System.out.println(events.get(counter).eventID);
+            System.out.println(events.get(counter).userID);
+            System.out.println(events.get(counter).username);
+        }
+
 
         //        insertEvent("test4", "test3", timestamp, trigger, "url", 1, 4, 0);
 
