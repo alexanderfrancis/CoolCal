@@ -67,6 +67,6 @@ public class Scheduler {
         };
 
         //run TimerTask code each hour (1000ms * 60 sec * 60 min)
-        t.schedule(hour, 0L, 1000 * 10);
+        t.schedule(hour, 0L, 1000 * 60 * 60);
     }
 }
