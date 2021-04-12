@@ -53,7 +53,7 @@ public class CalData{
 
 
 
-        public static boolean deleteEvent(Integer eventId){
+    public static boolean deleteEvent(Integer eventId){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
@@ -448,7 +448,7 @@ public class CalData{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
 
-            String query = "SELECT events.title, events.description, events.scheduledAt, events.url, guests.eventID, guests.userID, users.username " +
+            String query = "SELECT events.title, events.description, events.scheduledAt, events.url, guests.eventID, guests.userID, users.username, users.firstname, users.lastname, users.email, users.notified" +
                     "FROM events " +
                     "INNER JOIN guests ON events.Id = ? " +
                     "INNER JOIN users ON guests.userID = users.Id";
@@ -465,8 +465,12 @@ public class CalData{
                 String description = res.getString("description");
                 Timestamp scheduledAt = res.getTimestamp("scheduledAt");
                 String url = res.getString("url");
+                String firstname = res.getString("firstName");
+                String lastname = res.getString("lastName");
+                String email = res.getString("email");
+                Integer notified = res.getInt("notified");
 
-                MultiEvent u = new MultiEvent(userID, title, username,  eventID, description, scheduledAt,  url);
+                MultiEvent u = new MultiEvent(userID, title, username, eventID, description, scheduledAt, url, firstname, lastname, email, notified);
                 events.add(u);
             }
 
@@ -480,12 +484,11 @@ public class CalData{
     public static ArrayList<MultiEvent> userjoin(Integer userId) {
         ArrayList<MultiEvent> events = new ArrayList<MultiEvent>();
 
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
 
-            String query = "SELECT events.title, events.description, events.scheduledAt, events.url, guests.eventID, guests.userID, users.username " +
+            String query = "SELECT events.title, events.description, events.scheduledAt, events.url, guests.eventID, guests.userID, users.username, users.firstname, users.lastname, users.email, users.notified" +
                     "FROM events " +
                     "INNER JOIN guests ON events.userId = guests.userID " +
                     "INNER JOIN users ON users.Id = ?";
@@ -502,8 +505,12 @@ public class CalData{
                 String description = res.getString("description");
                 Timestamp scheduledAt = res.getTimestamp("scheduledAt");
                 String url = res.getString("url");
+                String firstname = res.getString("firstName");
+                String lastname = res.getString("lastName");
+                String email = res.getString("email");
+                Integer notified = res.getInt("notified");
 
-                MultiEvent u = new MultiEvent(userID, title, username,  eventID, description, scheduledAt,  url);
+                MultiEvent u = new MultiEvent(userID, title, username, eventID, description, scheduledAt, url, firstname, lastname, email, notified);
                 events.add(u);
             }
 
@@ -515,27 +522,28 @@ public class CalData{
     }
 
 
-
     public static ArrayList<MailInfo> mail(){
         ArrayList<MailInfo> mail = new ArrayList<MailInfo>();
 
         ArrayList<Event> today=getTodaysEvents();
         for (int counter = 0; counter < today.size(); counter++) {
-            Timestamp date = today.get(counter).date;
-            String title = today.get(counter).title;
-            String url = today.get(counter).URL;
-            String description = today.get(counter).description;
-            Integer notified = today.get(counter).notified;
             Integer id = today.get(counter).id;
-            Integer userId = today.get(counter).userID;
 
-            ArrayList<User> userinfo=getUsers(userId);
-            String firstName = userinfo.get(0).firstName;
-            String lastName = userinfo.get(0).lastName;
-            String email = userinfo.get(0).email;
+            ArrayList<MultiEvent> events = join(id);
+            for (int i = 0; i < events.size(); i++) {
+                String title = events.get(i).title;
+                String firstName = events.get(i).firstName;
+                String lastName = events.get(i).lastName;
+                String email = events.get(i).email;
+                Timestamp date = events.get(i).scheduledAt;
+                String url = events.get(i).url;
+                String description = events.get(i).description;
+                Integer notified = events.get(i).notified;
 
-            MailInfo m = new MailInfo(firstName, lastName, email, date, title, url, description, notified, id);
-            mail.add(m);
+                MailInfo m = new MailInfo(firstName, lastName, email, date, title, url, description, notified, id);
+                mail.add(m);
+
+            }
         }
         return mail;
     }
