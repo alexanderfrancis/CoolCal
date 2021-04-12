@@ -117,11 +117,11 @@
                             </font>
                         </Label>
                         <Button layoutX="479.0" layoutY="177.0" mnemonicParsing="false" text="Delete Event" />
-                        <Label id="titleLabel" layoutX="67.0" layoutY="21.0" text="." />
-                        <Label id="descriptionLabel" layoutX="106.0" layoutY="59.0" text="." />
-                        <Label id="scheduledAtLabel" layoutX="113.0" layoutY="101.0" text="." />
-                        <Label id="urlLabel" layoutX="67.0" layoutY="143.0" text="." />
-                        <Label id="hostLabel" layoutX="67.0" layoutY="181.0" text="." />
+                        <Label fx:id="titleLabel" layoutX="67.0" layoutY="21.0" text="." />
+                        <Label fx:id="descriptionLabel" layoutX="106.0" layoutY="59.0" text="." />
+                        <Label fx:id="scheduledAtLabel" layoutX="113.0" layoutY="101.0" text="." />
+                        <Label fx:id="urlLabel" layoutX="67.0" layoutY="143.0" text="." />
+                        <Label fx:id="hostLabel" layoutX="67.0" layoutY="181.0" text="." />
                     </children>
                 </Pane>
                 <Label layoutX="50.0" layoutY="260.0" text="Guests:" />
