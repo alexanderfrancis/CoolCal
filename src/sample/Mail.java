@@ -4,12 +4,16 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 
 public class Mail {
 
-    public boolean sendEmailTo(int notified, String recipient, String firstName, String lastName, String title, String url, Timestamp time) throws MessagingException {
+    public boolean sendEmailTo(int notified, String recipient, String firstName, String lastName, String title, String url, Timestamp time, int userId) throws MessagingException {
 
         if (notified == 0) {
             Properties p = new Properties();
@@ -18,6 +22,8 @@ public class Mail {
             p.put("mail.smtp.auth", "true");
             p.put("mail.smtp.starttls.enable", "true");
             p.put("mail.smtp.host", "smtp.gmail.com");
+
+            p.put("mail.smtp.ssl.enable" , "true");
 
             //user authentication details
             String user = "reallycoolcal@gmail.com";
@@ -56,17 +62,17 @@ public class Mail {
 
     public void multiSend(ArrayList<MailInfo> m) throws MessagingException {
         for (MailInfo a : m) {
-            sendEmailTo(a.getnotified(), a.getemail(), a.getfirstName(), a.getlastName(), a.gettitle(), a.geturl(), a.getregisteredAt());
+            sendEmailTo(a.getnotified(), a.getemail(), a.getfirstName(), a.getlastName(), a.gettitle(), a.geturl(), a.getregisteredAt(), a.getId());
         }
     }
 
-    public static void main(String [] args) {
+    public static void main(String [] args) throws MessagingException {
+
+
         Mail m = new Mail();
-        Timestamp t = new Timestamp(0);
-
-        //m.sendEmailTo(0, "reallycoolcal@gmail.com", "Alex", "Francis", "Wash Car", "google.ca", );
+        CalData c = new CalData();
+        ArrayList<MailInfo> today= c.mail();
+        m.multiSend(today);
     }
-
-
 
 }

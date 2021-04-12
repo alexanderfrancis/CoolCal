@@ -220,7 +220,6 @@ public class CalData{
             while(rs.next()!=false){
 
                 Timestamp date=rs.getTimestamp("scheduledAt");
-
                 String title=rs.getString("title");
                 Integer user_ID=rs.getInt("userId");
                 String description=rs.getString("description");
@@ -229,7 +228,6 @@ public class CalData{
                 String URL=rs.getString("url");
                 Timestamp triggeredAt=rs.getTimestamp("triggeredAt");
                 Integer notified=rs.getInt("notified");
-
 
                 Event e = new Event(user_ID,title,date,type,description,URL,triggeredAt,notified,ID);
 
@@ -272,7 +270,7 @@ public class CalData{
                 Integer notified=rs.getInt("notified");
 
 
-                Event e = new Event(user_ID,title,date,type,description,URL,triggeredAt,ID,notified);
+                Event e = new Event(user_ID,title, date, type, description, URL, triggeredAt, notified, ID);
 
                 today.add(e);
             }
@@ -378,7 +376,6 @@ public class CalData{
         calendar.set(Calendar.HOUR, hour);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, second);
-
         int min = 0;
         if (minute < 5){
             min = 60 - 5 + minute;
@@ -401,14 +398,16 @@ public class CalData{
             String url = today.get(counter).URL;
             String description = today.get(counter).description;
             Integer notified = today.get(counter).notified;
+            Integer id = today.get(counter).id;
             Integer userId = today.get(counter).userID;
+
 
             ArrayList<User> userinfo=getUsers(userId);
             String firstName = userinfo.get(0).firstName;
-            String lastName = userinfo.get(0).firstName;
+            String lastName = userinfo.get(0).lastName;
             String email = userinfo.get(0).email;
 
-            MailInfo m = new MailInfo(firstName, lastName, email, date, title, url, description, notified);
+            MailInfo m = new MailInfo(firstName, lastName, email, date, title, url, description, notified, id);
             mail.add(m);
         }
         return mail;
@@ -441,7 +440,7 @@ public class CalData{
 //        insertEvent("fdsfds","dmkmdksa",timestamp,trigger,"www.google.com",1,4, 0);
 //        insertEvent("test4", "test3", timestamp, trigger, "url", 1, 4, 0);
 
-//        updateEvent("title_update",null,null,null,null,null,21,null);
+//        updateEvent("title_update",null,null,null,null,null,null,null);
 
 
 //        ArrayList<User> userinfo=getUsers();
@@ -453,28 +452,28 @@ public class CalData{
 //        }
 
 
+//        ArrayList<MailInfo> today=mail();
+//        for (int counter = 0; counter < today.size(); counter++) {
+//            Timestamp date = today.get(counter).registeredAt;
+//            String title = today.get(counter).title;
+//            String url = today.get(counter).url;
+//            String description = today.get(counter).description;
+//            Integer notified = today.get(counter).notified;
+//            String firstName = today.get(counter).firstName;
+//            String lastName = today.get(counter).lastName;
+//            String email = today.get(counter).email;
+//
+//            System.out.println("========");
+//            System.out.println(firstName);
+//            System.out.println(lastName);
+//            System.out.println(email);
+//            System.out.println(title);
+//            System.out.println(description);
+//            System.out.println(url);
+//            System.out.println(date);
+//            System.out.println(notified);
+//        }
 
-        ArrayList<MailInfo> today=mail();
-        for (int counter = 0; counter < today.size(); counter++) {
-            Timestamp date = today.get(counter).registeredAt;
-            String title = today.get(counter).title;
-            String url = today.get(counter).url;
-            String description = today.get(counter).description;
-            Integer notified = today.get(counter).notified;
-            String firstName = today.get(counter).firstName;
-            String lastName = today.get(counter).firstName;
-            String email = today.get(counter).email;
 
-            System.out.println("========");
-            System.out.println(firstName);
-            System.out.println(lastName);
-            System.out.println(email);
-            System.out.println(title);
-            System.out.println(description);
-            System.out.println(url);
-            System.out.println(date);
-            System.out.println(notified);
-        }
     }
-
 }

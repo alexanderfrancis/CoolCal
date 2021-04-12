@@ -12,8 +12,9 @@ public class MailInfo {
     String url;
     String description;
     Integer notified;
+    Integer Id;
 
-    public MailInfo (String firstName, String lastName, String email, Timestamp registeredAt, String title, String url, String description, Integer notified) {
+    public MailInfo (String firstName, String lastName, String email, Timestamp registeredAt, String title, String url, String description, Integer notified, Integer Id) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +24,7 @@ public class MailInfo {
         this.url = url;
         this.description = description;
         this.notified = notified;
+        this.Id = Id;
     }
 
     public String getfirstName() { return firstName; }
@@ -71,6 +73,12 @@ public class MailInfo {
         this.notified = notified;
     }
 
+    public Integer getId() { return Id; }
+
+    public void setId(Integer Id) {
+        this.Id = Id;
+    }
+
     public void printMailInfo(){
         System.out.println("Name                   :      " + this.getfirstName() + " " + this.getlastName());
         System.out.println("Email                  :      " + this.getemail());
@@ -87,7 +95,7 @@ public class MailInfo {
         Timestamp ts=new Timestamp(date.getTime());
 
         MailInfo m = new MailInfo("Paul", "Blart",
-                "segwayspeeddemon@fake.io", ts, "test", ".com","test", 0);
+                "segwayspeeddemon@fake.io", ts, "test", ".com","test", 0, 1);
         m.printMailInfo();
     }
 }
