@@ -112,11 +112,10 @@ public class CalendarMainController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("CalenderMonth.fxml"));
         System.out.println("this is month button");
 
-
-
-
         Stage window = (Stage) getMonth.getScene().getWindow();
-        window.setScene(new Scene(root, 750, 800));
+//        window.setFullScreen(true);
+
+        window.setScene(new Scene(root));
 
     }
 

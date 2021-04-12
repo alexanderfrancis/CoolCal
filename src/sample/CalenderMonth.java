@@ -2,20 +2,26 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 
 import javafx.scene.layout.Border;
+import javafx.stage.Stage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.ScrollPane;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -238,6 +244,8 @@ public class CalenderMonth implements Initializable {
          DateMonth.setText(String.valueOf(month));
          DateYear.setText(String.valueOf(year));
 
+//         createNewCal(Calendar cal);
+
 
          YearMonth ym = YearMonth.of(year, month);
          System.out.println("Sun Mon Tue Wed Thu Fri Sat");
@@ -348,6 +356,23 @@ public class CalenderMonth implements Initializable {
                      if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                          Event rowData = row.getItem();
                          System.out.println(rowData);
+                         try {
+
+                             Parent root = FXMLLoader.load(getClass().getResource("viewEvent.fxml"));
+                             System.out.println("this is register button");
+
+                             Stage stage = new Stage();
+                             stage.setTitle("My New Stage Title");
+                             stage.setScene(new Scene(root, 800, 600));
+                             stage.setAlwaysOnTop(true);
+                             stage.show();
+                         }
+                         catch (IOException e) {
+                             e.printStackTrace();
+                         }
+
+
+
                      }
                  });
                  return row ;
@@ -484,6 +509,34 @@ public class CalenderMonth implements Initializable {
             EventName.setStyle("-fx-border-color: black");
             EventName.setStyle("-fx-background-color:#e6e6ff");
             grid.setVgrow(pane, Priority.ALWAYS);
+
+            tb.setRowFactory( tv -> {
+                TableRow<Event> row = new TableRow<>();
+                row.setOnMouseClicked(event -> {
+                    if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                        Event rowData = row.getItem();
+                        System.out.println(rowData);
+                        try {
+
+                            Parent root = FXMLLoader.load(getClass().getResource("viewEvent.fxml"));
+                            System.out.println("this is register button");
+
+                            Stage stage = new Stage();
+                            stage.setTitle("My New Stage Title");
+                            stage.setScene(new Scene(root, 500, 600));
+                            stage.setResizable(false);
+                            stage.show();
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                });
+                return row ;
+            });
 
 
 
