@@ -11,18 +11,63 @@ public class MultiEvent {
     String description;
     Timestamp scheduledAt;
     String url;
+    String firstName;
+    String lastName;
+    String email;
+    int notified;
 
-    public MultiEvent(Integer userID,String title, String username, Integer eventID, String description, Timestamp scheduledAt, String url) {
+    public String getUrl() {
+        return url;
+    }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getNotified() {
+        return notified;
+    }
+
+    public void setNotified(int notified) {
+        this.notified = notified;
+    }
+
+    public MultiEvent(Integer userID, String title, String username, Integer eventID, String description, Timestamp scheduledAt, String url, String firstName, String lastName, String email, int notified) {
         this.title = title;
-        this.eventID=eventID;
-        this.userID=userID;
-        this.username=username;
-        this.description=description;
-        this.scheduledAt=scheduledAt;
-        this.url=url;
-
+        this.eventID = eventID;
+        this.userID = userID;
+        this.username = username;
+        this.description = description;
+        this.scheduledAt = scheduledAt;
+        this.url = url;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.notified = notified;
     }
 
     public String getTitle() { return title; }
@@ -60,12 +105,8 @@ public class MultiEvent {
         System.out.println("User ID              :    " + this.getUserID());
         System.out.println("Username        :    " + this.getUsername());
         System.out.println("Triggered At      :    " + this.getEventID());
-
     }
 
     public static void main(String[] args) {
-//        Event e = new Event("Boba", "March 16, 2021", true);
-
-//        e.printEvent();
     }
 }
