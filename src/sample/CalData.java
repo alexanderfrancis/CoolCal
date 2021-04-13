@@ -448,10 +448,11 @@ public class CalData{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
 
-            String query = "SELECT events.title, events.description, events.scheduledAt, events.url, guests.eventID, guests.userID, users.username, users.firstname, users.lastname, users.email, users.notified" +
+            String query = "SELECT events.title, events.description, events.scheduledAt, events.url, events.Id, guests.userID, users.username, users.firstname, users.lastname, users.email,events.notified" +
                     "FROM events " +
-                    "INNER JOIN guests ON events.Id = ? " +
-                    "INNER JOIN users ON guests.userID = users.Id";
+                    "INNER JOIN guests ON events.Id = guests.eventID " +
+                    "INNER JOIN users ON guests.userID = users.Id" +
+                    "WHERE events.Id = ?";
 
             PreparedStatement preparedStmt = con.prepareStatement(query);
             preparedStmt.setInt (1, eventId);
