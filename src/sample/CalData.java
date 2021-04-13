@@ -249,7 +249,7 @@ public class CalData{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
 
-            String query="SELECT * FROM events WHERE DATE_SUB(CURDATE(), INTERVAL 1 DAY) <= scheduledAt;";
+            String query="SELECT * FROM events WHERE scheduledAt BETWEEN DATE(CURDATE()) AND DATE_ADD(CURDATE(), INTERVAL 1 DAY)";
 
             PreparedStatement preparedStmt = con.prepareStatement(query);
 
