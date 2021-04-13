@@ -101,7 +101,7 @@
                 <Label layoutX="41.0" layoutY="138.0" text="Description of Event:" />
                 <TextField layoutX="41.0" layoutY="244" fx:id="ScheduledAtInput"/>
                 <Label layoutX="41.0" layoutY="200.0" text="Scheduled at:" />
-<!--                <Button layoutX="150" layoutY="244.0" mnemonicParsing="false" text="Pick a Date" fx:id="datePicker" onAction="#schedule" />-->
+                <!--                <Button layoutX="150" layoutY="244.0" mnemonicParsing="false" text="Pick a Date" fx:id="datePicker" onAction="#schedule" />-->
                 <DatePicker layoutX="360" layoutY="244.0"  fx:id="date"/>
                 <Spinner fx:id="spinner"  layoutX="41.0"  layoutY="244" >
                     <valueFactory>
@@ -139,8 +139,8 @@
 
                 <TextField layoutX="41.0" layoutY="405.0" fx:id="URLInput"/>
                 <Label layoutX="42.0" layoutY="372.0" text="URL link of meeting" />
-                <TextField layoutX="41.0" layoutY="478.0" fx:id="typeInput"/>
-                <Label layoutX="42.0" layoutY="450.0" text="type" />
+                <!--                <TextField layoutX="41.0" layoutY="478.0" fx:id="typeInput"/>-->
+                <!--                <Label layoutX="42.0" layoutY="450.0" text="type" />-->
             </children>
         </AnchorPane>
     </children>

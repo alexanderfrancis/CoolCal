@@ -381,7 +381,7 @@ public class CalData{
         return trigger;
     }
 
-    public static boolean userExists(String username){
+    public static ArrayList<User> userExists(String username){
         boolean result =false;
         ArrayList<User> user = new ArrayList<User>();
         try {
@@ -415,7 +415,7 @@ public class CalData{
         }catch (Exception e){
             System.out.println(e);
         }
-        return result;
+        return user;
     }
 
 
@@ -439,6 +439,45 @@ public class CalData{
             return false;
         }
     }
+    public static ArrayList<Event> getEvent(Integer eventId){
+        ArrayList<Event> event = new ArrayList<Event>(); // Create an ArrayList object
+
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
+
+            String query="SELECT * FROM events WHERE Id=? ";
+
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            preparedStmt.setInt(1, eventId);
+
+            ResultSet rs=preparedStmt.executeQuery();
+
+            while(rs.next()!=false){
+
+                Timestamp date=rs.getTimestamp("scheduledAt");
+                String title=rs.getString("title");
+                Integer user_ID=rs.getInt("userId");
+                String description=rs.getString("description");
+                Integer ID=rs.getInt("id");
+                String URL=rs.getString("url");
+                Timestamp triggeredAt=rs.getTimestamp("triggeredAt");
+                Integer notified=rs.getInt("notified");
+
+                Event e = new Event(user_ID,title,date,description,URL,triggeredAt,notified,ID);
+
+                event.add(e);
+                System.out.println("done events");
+            }
+
+            con.close();
+        }catch (Exception e){
+            System.out.println(e);
+
+        }
+        return event;
+    }
 
     //function that returns hosts name
     public static ArrayList<MultiEvent> join(Integer eventId) {
@@ -447,12 +486,12 @@ public class CalData{
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
-
-            String query = "SELECT events.title, events.description, events.scheduledAt, events.url, events.Id, guests.userID, users.username, users.firstname, users.lastname, users.email,events.notified" +
+            String query = "SELECT DISTINCT events.title, events.description, events.scheduledAt, events.url, guests.eventID, guests.userID, users.username, users.firstname, users.lastname, users.email, events.notified " +
                     "FROM events " +
-                    "INNER JOIN guests ON events.Id = guests.eventID " +
-                    "INNER JOIN users ON guests.userID = users.Id" +
-                    "WHERE events.Id = ?";
+                    "INNER JOIN guests ON events.Id = ? " +
+                    "INNER JOIN users ON guests.userID = users.Id";
+
+
 
             PreparedStatement preparedStmt = con.prepareStatement(query);
             preparedStmt.setInt (1, eventId);
@@ -482,6 +521,7 @@ public class CalData{
         return events;
     }
 
+
     public static ArrayList<MultiEvent> userjoin(Integer userId) {
         ArrayList<MultiEvent> events = new ArrayList<MultiEvent>();
 
@@ -489,13 +529,14 @@ public class CalData{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/calendar","root","");
 
-            String query = "SELECT events.title, events.description, events.scheduledAt, events.url, guests.eventID, guests.userID, users.username, users.firstname, users.lastname, users.email, users.notified" +
-                    "FROM events " +
-                    "INNER JOIN guests ON events.userId = guests.userID " +
-                    "INNER JOIN users ON users.Id = ?";
+            String query = "SELECT events.title, events.Id as eventID,users.Id as userID,users.userName,events.description,events.scheduledAt,events.url,users.firstName,users.lastName,users.email,events.notified FROM events JOIN users ON events.userId = users.Id WHERE users.Id=? UNION\n" +
+                    "\n" +
+                    " Select events.title, events.Id,users.Id,users.userName,events.description,events.scheduledAt,events.url,users.firstName,users.lastName,users.email,events.notified FROM guests JOIN events ON guests.eventID=events.Id INNER JOIN users ON guests.userID=users.Id WHERE users.Id=?";
 
             PreparedStatement preparedStmt = con.prepareStatement(query);
             preparedStmt.setInt (1, userId);
+            preparedStmt.setInt (2, userId);
+
             ResultSet res=preparedStmt.executeQuery();
 
             while (res.next()) {

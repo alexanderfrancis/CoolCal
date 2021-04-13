@@ -32,20 +32,11 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ViewEventController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
@@ -101,33 +92,40 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <Label layoutX="28.0" layoutY="101.0" text="Scheduled At:">
+                        <Label fx:id="schedule" layoutX="28.0" layoutY="101.0" text="Scheduled At:">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <Label layoutX="29.0" layoutY="143.0" text="URL:">
+                        <Label fx:id="URL" layoutX="29.0" layoutY="143.0" text="URL:">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <Label layoutX="28.0" layoutY="181.0" text="Host: ">
+                        <Label fx:id="hostName" layoutX="28.0" layoutY="181.0" text="Host: ">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <Button layoutX="479.0" layoutY="177.0" mnemonicParsing="false" text="Delete Event" />
-                        <Label fx:id="titleLabel" layoutX="67.0" layoutY="21.0" text="." />
-                        <Label fx:id="descriptionLabel" layoutX="106.0" layoutY="59.0" text="." />
-                        <Label fx:id="scheduledAtLabel" layoutX="113.0" layoutY="101.0" text="." />
-                        <Label fx:id="urlLabel" layoutX="67.0" layoutY="143.0" text="." />
-                        <Label fx:id="hostLabel" layoutX="67.0" layoutY="181.0" text="." />
+                        <Button fx:id="delete" layoutX="479.0" layoutY="177.0" mnemonicParsing="false" onAction="#deleteButton" text="Delete Event" />
+                        <Text fx:id="titleLabel" layoutX="67.0" layoutY="21.0" />
+                        <Text fx:id="descriptionLabel" layoutX="106.0" layoutY="59.0" />
+                        <Text fx:id="scheduledAtLabel" layoutX="113.0" layoutY="101.0" />
+                        <Text fx:id="urlLabel" layoutX="67.0" layoutY="143.0" />
+                        <Text fx:id="hostLabel" layoutX="67.0" layoutY="181.0" />
+                        <Button fx:id="backButton" layoutX="500.0" layoutY="17.0" onAction="#backButton" mnemonicParsing="false" text="Back" />
                     </children>
                 </Pane>
                 <Label layoutX="50.0" layoutY="260.0" text="Guests:" />
-                <TextArea id="guestTextArea" layoutX="94.0" layoutY="256.0" prefHeight="87.0" prefWidth="183.0" />
-                <TextField id="inviteTextField" layoutX="398.0" layoutY="318.0" />
+                <TableView fx:id="TableView" layoutX="100" layoutY="260" prefHeight="150" prefWidth="200">
+                    <columns>
+                        <TableColumn fx:id="nameGuest" prefWidth="170.0" text="name guest" />
+                        <TableColumn fx:id="emailGuest" minWidth="0.0" prefWidth="61.0" text="email guest" />
+
+                    </columns>
+                </TableView>
                 <Label layoutX="380.0" layoutY="269.0" text="Enter single username to invite guests" />
+            <TextField layoutX="389.0" layoutY="318.0" fx:id="inviteTextField"/>
             </children>
         </AnchorPane>
     </children>
